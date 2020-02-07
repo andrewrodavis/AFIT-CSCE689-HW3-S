@@ -1,0 +1,6 @@
+
+
+Sieve of Eratosthenes Algorithm:
+- Find first n prime numbers, from 2 -> n
+- Create list 2 -> n
+-

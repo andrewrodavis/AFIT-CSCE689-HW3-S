@@ -16,16 +16,16 @@
 #include <getopt.h>
 #include <unistd.h>
 
-#include "PCalc_SP.h"
-#include "PCalc_T.h"
+#include <PCalc_SP.h>
+#include <PCalc_T.h>
 
 using namespace std::chrono;
 
 // Default of how high should we get prime numbers up to:
-const unsigned int default_max_range = 1000000;
+const unsigned int default_max_range = 10;
 
 // Default maximum number of threads that should be used to calculate
-const unsigned int default_num_threads = 4;
+const unsigned int default_num_threads = 1;
 
 void displayHelp(const char *execname) {
    std::cout << execname << " [-t <num_threads>] [-n <max_range>] [-s] [-m]\n";
@@ -124,7 +124,7 @@ int main(int argc, char *argv[]) {
 
       if (write_to_disk) {
          std::cout << "Writing primes to file\n"; 
-         primes.printPrimes("sp_primes.txt");
+         primes.printPrimes("../sp_primes.txt");
       }
 
       std::cout << "Complete.\n";
@@ -132,28 +132,28 @@ int main(int argc, char *argv[]) {
    }
 
    // Find primes using multiple threads
-   if (use_multithread) {
-
-      // Initialize student's class with our max possible prime (count_to) and the max number of threads
-      // to use in the calculator (num_threads)
-      PCalc_T tprimes(count_to, num_threads);
-      std::cout << "Calculating " << count_to << " possible primes using " << num_threads << 
-	   					" max threads.\n";
-
-      // Student's function to manage multiple threads to calculate primes
-      auto start = high_resolution_clock::now();
-      tprimes.markNonPrimes();
-      auto stop = high_resolution_clock::now();
-
-      auto duration = duration_cast<microseconds>(stop - start);
-      std::cout << "Function took: " << duration.count() << " microseconds\n";
-
-      if (write_to_disk) {
-         std::cout << "Writing primes to file\n";
-         tprimes.printPrimes("threaded_primes.txt");
-      }
-
-      std::cout << "Complete.\n";
-
-   }
+//   if (use_multithread) {
+//
+//      // Initialize student's class with our max possible prime (count_to) and the max number of threads
+//      // to use in the calculator (num_threads)
+//      PCalc_T tprimes(count_to, num_threads);
+//      std::cout << "Calculating " << count_to << " possible primes using " << num_threads <<
+//	   					" max threads.\n";
+//
+//      // Student's function to manage multiple threads to calculate primes
+//      auto start = high_resolution_clock::now();
+//      tprimes.markNonPrimes();
+//      auto stop = high_resolution_clock::now();
+//
+//      auto duration = duration_cast<microseconds>(stop - start);
+//      std::cout << "Function took: " << duration.count() << " microseconds\n";
+//
+//      if (write_to_disk) {
+//         std::cout << "Writing primes to file\n";
+//         tprimes.printPrimes("threaded_primes.txt");
+//      }
+//
+//      std::cout << "Complete.\n";
+//
+//   }
 }
