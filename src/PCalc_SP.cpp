@@ -17,27 +17,22 @@ void PCalc_SP::markNonPrimes() {
     // Used for fast --> run with this in loop and "this->array_size()" to compare performance maybe
     int arraySize = this->array_size();
 
-    // run through square root of arraySize
-    for(int i = 0; i < squareRoot; i++){
-        // Check value at i for true or false
-        // If true, begin crossing out its multiples
-        if(this->at(i)) {
-            // Iterate through the list from i -> the size of the array
-            //      i2, i2+i, i2+2i, i2+3i == just add i to each one
-            // This is the current prime found that will be checked
-            int checkValue = i * i;
-            for (int j = i; j < this->array_size(); j++) {
-                // Switch flag
-                this->at(checkValue) = false;
+    // Mark 0 and 1 as false to not include in list
+    this->at(0) = this->at(1) = false;
 
-                // add i to the check value
-                checkValue = checkValue + i;
+    // Need array of bool values --> this->at(i). Assume the first element here is 2?
+    // Iterate over the list until square root of array_size
+    for(int i = 2; i < squareRoot; i++){
+        // if the current value is true,
+        if(this->at(i)){
+            // It is a prime, begin marking its multiples as false
+            // Iterate from the i^2 to the end of the array list
+            // Get i * i as value
+            int currentPrime = i * i;
+            while(currentPrime < arraySize){
+                this->at(currentPrime) = false;
+                currentPrime = currentPrime + i;
             }
         }
-        // If false, it is not a prime, continue
-        else{
-            continue;
-        }
     }
-
 }
