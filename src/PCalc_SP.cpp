@@ -1,7 +1,7 @@
 #include <PCalc_SP.h>
 #include <PCalc.h>
 #include <iostream>
-#include <math.h>
+#include <cmath>
 
 PCalc_SP::PCalc_SP(unsigned int arraySize) : PCalc(arraySize){}
 
@@ -13,9 +13,10 @@ PCalc_SP::PCalc_SP(unsigned int arraySize) : PCalc(arraySize){}
  */
 void PCalc_SP::markNonPrimes() {
     // Square root for fast
-    int squareRoot = sqrt(this->array_size());
     // Used for fast --> run with this in loop and "this->array_size()" to compare performance maybe
-    int arraySize = this->array_size();
+    unsigned int arraySize = this->array_size();
+    // This is giving the wrong number for 2^32. It is 1 off because size of int
+    auto squareRoot = sqrt(arraySize);
 
     // Mark 0 and 1 as false to not include in list
     this->at(0) = this->at(1) = false;

@@ -1,6 +1,3 @@
-
-
-Sieve of Eratosthenes Algorithm:
-- Find first n prime numbers, from 2 -> n
-- Create list 2 -> n
--
+For multi-threaded:
+- Start with function calls for threads
+- Maybe later try with lambdas for practice
