@@ -1,10 +1,12 @@
 #include <PCalc_SP.h>
 #include <PCalc.h>
-#include "PCalc_T.h"
+#include <PCalc_T.h>
 #include <math.h>
 #include <functional>
 #include <iostream>
 #include <algorithm>
+#include <vector>
+#include <thread>
 
 PCalc_T::PCalc_T(unsigned int arraySize, unsigned int num_threads) : PCalc(arraySize){
     this->numThreads = num_threads;
@@ -40,41 +42,23 @@ void PCalc_T::markNonPrimes() {
  */
 int PCalc_T::sieveOfErat(int start) {
     // For faster access
-    int arraySize = this->array_size();
-    int squareRoot = sqrt(arraySize);
+    long int arraySize = this->array_size();
+    long int squareRoot = sqrt(this->array_size());
+    bool * primeNumber = &at(0);
 
-    for(int i = start; i < squareRoot; i++){
+    for(long int i = start; i < squareRoot; i++){
         // If the current value is true...
-        if(this->at(i)){
+        if(primeNumber[i]){
+//        if(this->at(i)){
             // ...then it is a prime. Begin
-            int currentPrime = i * i;
+            long int currentPrime = i * i;
 
             // Mark all its multiples
             while(currentPrime < arraySize){
-                this->at(currentPrime) = false;
+                primeNumber[i] = false;
+//                this->at(currentPrime) = false;
                 currentPrime = currentPrime + i;
             }
         }
     }
 }
-
-
-//int PCalc_T::sieveOfErat() {
-//    // For faster access
-//    int squareRoot = sqrt(this->array_size());
-//    int arraySize = this->array_size();
-//
-//    for(int i = 2; i < squareRoot; i++){
-//        // If the current value is true...
-//        if(this->at(i)){
-//            // ...then it is a prime. Begin
-//            int currentPrime = i * i;
-//
-//            // Mark all its multiples
-//            while(currentPrime < arraySize){
-//                this->at(currentPrime) = false;
-//                currentPrime = currentPrime + i;
-//            }
-//        }
-//    }
-//}
