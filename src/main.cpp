@@ -18,11 +18,12 @@
 
 #include <PCalc_SP.h>
 #include <PCalc_T.h>
+#include <fstream>
 
 using namespace std::chrono;
 
 // Default of how high should we get prime numbers up to:
-const unsigned int default_max_range = 5000000; //pow(2, 32) - 1;
+const unsigned int default_max_range = 50; //pow(2, 32) - 1;
 
 // Default maximum number of threads that should be used to calculate
 const unsigned int default_num_threads = 2;
@@ -134,26 +135,44 @@ int main(int argc, char *argv[]) {
 //    Find primes using multiple threads
    if (use_multithread) {
 
-      // Initialize student's class with our max possible prime (count_to) and the max number of threads
-      // to use in the calculator (num_threads)
-      PCalc_T tprimes(count_to, num_threads);
-      std::cout << "Calculating " << count_to << " possible primes using " << num_threads <<
-	   					" max threads.\n";
+       // Loop added for data collection
+//       std::vector<double> times;
+//       for(int p = 0; p < 50; p++) {
+//           std::cout << "p: " << p << "\n";
+           // Initialize student's class with our max possible prime (count_to) and the max number of threads
+           // to use in the calculator (num_threads)
+           PCalc_T tprimes(count_to, num_threads);
+           std::cout << "Calculating " << count_to << " possible primes using " << num_threads <<
+                     " max threads.\n";
 
-      // Student's function to manage multiple threads to calculate primes
-      auto start = high_resolution_clock::now();
-      tprimes.markNonPrimes();
-      auto stop = high_resolution_clock::now();
+           // Student's function to manage multiple threads to calculate primes
+           auto start = high_resolution_clock::now();
+           tprimes.markNonPrimes();
+           auto stop = high_resolution_clock::now();
 
-      auto duration = duration_cast<microseconds>(stop - start);
-      std::cout << "Function took: " << duration.count() << " microseconds\n";
+           auto duration = duration_cast<microseconds>(stop - start);
+           std::cout << "Function took: " << duration.count() << " microseconds\n";
 
-      if (write_to_disk) {
-         std::cout << "Writing primes to file\n";
-         tprimes.printPrimes("threaded_primes.txt");
-      }
+           if (write_to_disk) {
+               std::cout << "Writing primes to file\n";
+               tprimes.printPrimes("threaded_primes.txt");
+           }
 
-      std::cout << "Complete.\n";
+           // Write to file list
+            times.push_back(duration.count());
 
+           std::cout << "Complete.\n";
+//       }
+
+       // Data Collection
+//       std::ofstream fout;
+//
+//       fout.open("results.csv", std::ios::out | std::ios::app);
+//
+//       for(auto &val : times){
+//           fout << val << ", \n";
+//       }
+//
+//       fout.close();
    }
 }
